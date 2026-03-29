@@ -142,7 +142,7 @@ Read `references/section-blueprints.md` for detailed layouts. Key principles:
 
 Vary three dimensions between sections to create rhythm:
 
-1. **Background**: alternate between base and elevated colors
+1. **Background**: alternate between base and elevated colors — but go beyond flat `background-color`. Use tonal gradients, mesh gradients, or accent edge glows to give sections visual texture. The hero earns the most complexity (mesh gradient + tonal gradient). The final CTA benefits from an accent edge glow (accent at 3-5% opacity fading from the top). Content sections stay quieter (single tonal gradient or clean base). See `frontend-craft` → `references/immersive-design.md` → "Fundos Personalizados" for techniques and code.
 2. **Padding**: tier 1 (120-160px) → tier 3 (48-64px) → tier 2 (80-96px) — never uniform
 3. **Container width**: hero (narrow, ~800px) → credibility (full-width) → process (~1000px) → FAQ (~720px) → final CTA (~640px). The narrowing creates a subconscious funnel effect.
 
@@ -167,6 +167,26 @@ NOT every section follows: overline → title → subtitle → content → CTA. 
 - **Process**: Overline + title, then straight into steps. No subtitle.
 - **FAQ**: Overline + title, then accordion. No subtitle.
 - **Final CTA**: Title (as question) + one line microcopy + button. Three elements max.
+
+### Immersive layer per section — 3D, transitions, and visual polish
+
+Each section gets a specific immersive treatment. Don't apply effects uniformly — assign them based on the section's role in the persuasion arc. Code for all techniques lives in `frontend-craft` → `references/immersive-design.md`.
+
+| Section | 3D / Motion | Transition IN | Decorative elements |
+|---------|------------|---------------|-------------------|
+| **Hero** | Parallax depth layers (mouse-reactive) + perspective entrance (`rotateX(5deg)→0`) + magnetic CTA. Maximal: Three.js background | — (first section) | Gradient orbs, accent line above overline, geometric shapes in parallax layer |
+| **Credibility bar** | None — static is appropriate for trust signals | Simple fade staggered across items (no cinematic transition) | Subtle top/bottom borders only |
+| **Process** | Connector line draw-in on scroll + subtle `rotateY` on step numbers | Clip-path diagonal reveal OR staggered fade-in | Accent-colored timeline dots, accent line beside title |
+| **Arguments / Why Us** | Cards: 3D tilt on hover + internal Z-depth layers + glow on hover | Sticky previous section + this slides over | Gradient border on featured card, decorative dots at grid intersections |
+| **Numbers / Stats** | Spring counter with overshoot — no 3D transforms on numbers | Clip-path inset reveal from bottom | Vertical separators are sufficient — no extra decoration |
+| **FAQ** | Accordion open/close only — no 3D, no scroll effects | Scale-fade from previous section | None — clean surface for reading |
+| **Final CTA** | CTA glow pulse + magnetic hover | Clip-path circle reveal from center | Accent edge glow background, gradient border on CTA area |
+
+**Rules**:
+- **Max 2-3 cinematic section transitions per page.** The rest use simple scroll reveals.
+- **Reading-heavy sections (FAQ, long arguments) get zero visual noise.** Clean background, no decorative elements.
+- **Hero and final CTA earn the richest treatment.** Everything in between is more restrained.
+- **Cards always get 3D tilt on hover** (unless immersion level is Subtle).
 
 ## Step 5 — Build
 
@@ -213,6 +233,10 @@ The `frontend-craft` skill handles visual/motion/spacing/accessibility checks. T
 - [ ] Container widths vary between sections
 - [ ] Internal structure varies (not every section has overline+title+subtitle+content)
 - [ ] At least one section has NO title (credibility bar or numbers)
+- [ ] At least the hero and final CTA use a background treatment beyond flat solid color
+- [ ] Each section has an intentional immersive treatment (3D effects, transition, decorative elements)
+- [ ] Max 2-3 cinematic section transitions — the rest use simple scroll reveals
+- [ ] Reading-heavy sections (FAQ) have zero decorative visual noise
 - [ ] Visual rhythm alternates between dense and spacious sections
 
 **Conversion**

@@ -58,6 +58,13 @@ The core problem is **pattern convergence** — without strong constraints, gene
 
 **The fix**: Always use off-black and off-white. The user won't consciously notice, but the page will feel "warmer" and more intentional.
 
+### ❌ The Flat Uniform Background
+**What it looks like**: Every section uses `background-color: var(--base)` or `background-color: var(--elevated)` as the complete background definition. The entire page is flat solid-color blocks stacked vertically. No gradients, no texture, no tonal variation — just alternating slabs of two colors.
+
+**Why it's wrong**: Flat solid backgrounds are the visual equivalent of a blank wall. They work for app UIs where content density carries the design, but on marketing pages and landing pages, they signal "template." Real design treats the background as a surface with subtle visual interest — tonal shifts, material texture, or color fields that reinforce the brand. A page with only flat `background-color` feels like the developer stopped before finishing.
+
+**The fix**: The hero section should have at minimum a tonal gradient (2-3 shades of the base color blended via radial gradient). The final CTA benefits from an accent edge glow (accent color at 3-5% opacity fading from one edge). Content sections alternate between clean backgrounds and subtly textured ones (dot grid, noise texture) to reinforce visual rhythm. The treatment should be nearly invisible — if the visitor consciously notices the background pattern, it's too strong. See `references/immersive-design.md` → "Fundos Personalizados" for techniques and code.
+
 ### ❌ Accent Overload
 **What it looks like**: The brand's accent color is used on buttons, icons, borders, badges, backgrounds, dividers, and hover states. The page is 40% accent color.
 

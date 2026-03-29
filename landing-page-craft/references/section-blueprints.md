@@ -111,6 +111,8 @@ On top of the base hero, add these depth and interaction layers:
 
 **Magnetic CTA**: The hero CTA button should have magnetic hover — it moves slightly toward the cursor when the cursor is near. See `references/immersive-design.md` → "Magnetic buttons".
 
+**Custom background surface**: The hero background should never be a flat `background-color`. Use a mesh gradient (2-3 overlapping radial gradients with desaturated accent color at 3-6% opacity) as the base surface, beneath any parallax layers. Combined with a tonal gradient (2-3 shades of the base color), this gives the hero visual depth before any animation is applied. See `references/immersive-design.md` → "Fundos Personalizados".
+
 **Ambient atmosphere**: Behind all text, add 2-3 gradient orbs (blurred circles in accent color at 10-15% opacity) floating with very slow animation (8-10s cycle). Add a grain texture overlay at 2-3% opacity. Optional: vignette (radial gradient darkening edges).
 
 **Three.js background (Maximal level only)**: Replace static background with a WebGL scene — floating particles, gradient mesh surface, or abstract geometry. The scene reacts to mouse position. Content overlays with `position: relative; z-index: 1`. See `references/immersive-design.md` → "Three.js".
@@ -150,6 +152,12 @@ As the visitor scrolls past the hero, it should not simply disappear. Options:
 
 ### Mobile
 - 2 items per row, or stack vertically with horizontal separators
+
+### Visual layer
+- **Transition in**: No cinematic transition — simple fade-in staggered across items (150ms between) on scroll entry. This section is too thin for clip-path or sticky transitions.
+- **3D effects**: None. Trust signals should feel grounded and stable, not animated.
+- **Decorative elements**: Top and bottom structural borders are sufficient. No accent lines, no glows, no shapes.
+- **Background treatment**: Elevated color, clean. No mesh gradient, no dot grid — keep it whisper-quiet.
 
 ---
 
@@ -218,6 +226,12 @@ Step 03 ──────── aligned left
 - Each step fades in on scroll entry (IntersectionObserver)
 - Stagger: 150ms between steps
 - Connector lines can animate (draw-in effect) for extra polish
+
+### Visual layer
+- **Transition in**: Clip-path diagonal reveal (content "sweeps" in from left, matching reading direction). Alternative: simple staggered fade-in if the page already has 2+ cinematic transitions.
+- **3D effects**: Step numbers can enter with subtle `rotateY(15deg)→0` on scroll. Connector lines animate with draw-in effect (SVG `stroke-dashoffset` or height transition). Steps themselves stay flat — 3D tilt is for cards, not timeline items.
+- **Decorative elements**: Accent-colored timeline dots (8-12px). Optional: thin accent line (40px) beside the section title overline. The connector lines themselves are decorative — no additional elements needed.
+- **Background treatment**: Dot grid or clean base. See `immersive-design.md` → "Fundos Personalizados" decision table.
 
 ---
 
@@ -331,6 +345,12 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 ### Mobile
 - Stack metrics vertically with horizontal separators between them
 
+### Visual layer
+- **Transition in**: Clip-path inset reveal from bottom (numbers "rise" into view). Count-up animation triggers after reveal completes.
+- **3D effects**: None on the numbers. The spring counter animation with overshoot IS the motion. Adding 3D transforms would compete with the number animation.
+- **Decorative elements**: Vertical separators between metrics are already decorative-structural. Optional: subtle accent edge glow from top if following a visually rich section. No additional dots, lines, or shapes — let the numbers dominate.
+- **Background treatment**: Clean base or accent edge glow. See `immersive-design.md` → "Fundos Personalizados" decision table.
+
 ---
 
 <a id="faq"></a>
@@ -363,6 +383,12 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - Answers should be 2-4 sentences max, specific and concrete
 - End the last FAQ answer with a soft nudge: "Ainda tem dúvidas? Fale conosco pelo WhatsApp."
 
+### Visual layer
+- **Transition in**: Scale-fade from previous section (previous section scales down 5% + blur while FAQ fades in). A "settling" transition — the page calms down for reading.
+- **3D effects**: None. This is a reading section. The accordion open/close animation (height + fade, 250ms) is the only motion.
+- **Decorative elements**: None. A clean, quiet surface is mandatory for a reading-intensive section. The narrow container (680-720px) and generous whitespace ARE the design.
+- **Background treatment**: Clean elevated base. No gradients, no dot grid, no noise. The FAQ's role is resolution — visual calm matches the emotional calm of answered questions.
+
 ---
 
 <a id="final-cta"></a>
@@ -371,7 +397,7 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 **Purpose**: Last push. The visitor has consumed all the content — now close.
 
 ### Layout
-- Base background (or subtle gradient toward a slightly different shade — NOT an accent gradient)
+- Base background with accent edge glow: a `linear-gradient` from the accent color at 3-5% opacity at the top, fading to base color by 30%. This warms the section and draws attention to the CTA without being an obvious accent gradient. Combine with a tonal gradient in the base color for added depth. See `references/immersive-design.md` → "Accent Edge Glow".
 - Generous vertical padding (120-160px)
 - Container: max-width 600-640px, centered, text-align center
 
@@ -410,6 +436,11 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - Massive multi-column footer with sitemap (this is a single-page LP)
 - Newsletter signup (the conversion channel is already defined)
 - Decorative elements or accent-colored backgrounds
+
+### Visual layer
+- **Transition in**: No transition — the footer is structural, not cinematic. Simple visibility on scroll.
+- **3D effects**: Social icons can have the standard `scale(1.15)` hover. Nothing else.
+- **Decorative elements**: Top border (structural). No accent lines, no glows, no shapes. The footer is closure, not spectacle.
 
 ---
 

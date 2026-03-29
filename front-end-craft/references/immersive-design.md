@@ -13,7 +13,7 @@ A diferença entre uma LP flat e uma LP imersiva não é "mais animação". É q
 6. [Cards e Elementos com Profundidade](#cards-3d)
 7. [Transições Cinematográficas entre Seções](#transicoes)
 8. [Texto que Vive](#texto-vivo)
-9. [Atmosfera e Ambientação](#atmosfera)
+9. [Atmosfera, Fundos, Ambientação e Elementos Decorativos](#atmosfera)
 10. [Smooth Scroll (Lenis)](#smooth-scroll)
 11. [Stack Técnico Imersivo](#stack)
 12. [Performance — O Limite da Imersão](#performance)
@@ -757,9 +757,149 @@ function SpringCounter({ target, duration = 1200 }) {
 ---
 
 <a id="atmosfera"></a>
-## 9. Atmosfera e Ambientação
+## 9. Atmosfera, Fundos e Ambientação
 
-### Grain/noise texture
+A atmosfera de uma página tem duas camadas distintas: a **superfície do fundo** (o que o background da seção É) e as **camadas atmosféricas** (o que flutua ACIMA dele — grain, orbs, vignette). Ambas trabalham juntas, mas são implementadas separadamente.
+
+### 9.1 Fundos Personalizados (Background Surface Treatments)
+
+Um `background-color` sólido é ponto de partida, não resultado final. Fundos personalizados usam gradientes, texturas ou padrões sutis para criar uma superfície que parece intencional — não gerada. A regra de ouro: **se o visitante percebe conscientemente o padrão, está forte demais.** O tratamento deve ser invisível num screenshot de celular, mas sentido no desktop.
+
+Todas as técnicas abaixo são CSS-only (gradientes e SVG inline no `background-image`). Zero HTTP requests adicionais, composited pela GPU, sem impacto em performance.
+
+#### Técnica 1: Tonal Gradient (mais simples — sempre apropriado)
+
+Um radial ou linear gradient usando 2-3 tons da cor base. Não é um gradiente visível — é uma variação tonal sutil que impede o fundo de parecer plano. Diferença de 2-5% entre os tons.
+
+```css
+/* Dark theme — shift sutil de #09090B para #0F0F12 */
+.section-hero {
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    hsl(240 6% 8%) 0%,
+    hsl(240 6% 4%) 70%
+  );
+}
+
+/* Light theme — shift sutil de #FAFAFA para #F4F4F8 */
+.section-hero-light {
+  background: radial-gradient(
+    ellipse at 70% 30%,
+    hsl(240 10% 98%) 0%,
+    hsl(240 4% 96%) 70%
+  );
+}
+```
+
+O ponto focal do gradiente (`at 30% 20%`) deve estar próximo de onde o conteúdo principal se concentra — nunca perfeitamente centralizado (parece genérico).
+
+#### Técnica 2: Mesh Gradient (campos de cor multi-ponto)
+
+Múltiplos radial-gradients sobrepostos em opacidade muito baixa, usando o hue do accent dessaturado. Cria um campo de cor orgânico e não-repetitivo — como luz ambiente refletida.
+
+```css
+.section-bg-mesh {
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(at 20% 30%, hsla(var(--accent-hue), 40%, 50%, 0.06) 0%, transparent 50%),
+    radial-gradient(at 80% 70%, hsla(var(--accent-hue), 30%, 30%, 0.04) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, hsla(var(--accent-hue), 20%, 60%, 0.03) 0%, transparent 60%);
+}
+```
+
+Regras do mesh gradient:
+- Opacidade entre **0.03-0.08** por ponto — nunca acima de 0.1
+- Mínimo 2 pontos, máximo 4 (mais que isso vira ruído)
+- Usar o hue do accent **dessaturado** (saturation 20-40%), nunca o accent puro
+- Posições assimétricas (`20% 30%`, `80% 70%`) — nunca pontos simétricos ou centralizados
+
+#### Técnica 3: Dot Grid (padrão estrutural, feel editorial)
+
+Um padrão repetitivo de pontos minúsculos via CSS. Funciona bem em seções que precisam de uma sensação "técnica" ou "estruturada" — seções de processo, argumentos, pricing.
+
+```css
+.section-dotgrid {
+  background-color: var(--bg-base);
+  background-image: radial-gradient(
+    circle,
+    rgba(var(--text-tertiary-rgb), 0.07) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 24px 24px;
+}
+```
+
+Regras do dot grid:
+- Tamanho do ponto: **0.5-1px** (menor que 0.5px desaparece em telas normais)
+- Opacidade dos pontos: **0.05-0.10** (controlada via rgba na cor)
+- Grid size: **20-32px** (menor fica denso demais, maior fica esparso)
+- Funciona melhor em dark themes onde os pontos são claros sobre fundo escuro
+- **Não combine** com grain overlay na mesma seção — os padrões competem
+
+#### Técnica 4: Noise Texture como Background (textura por seção)
+
+Em vez do grain overlay global (que cobre toda a página), usar SVG noise inline no `background-image` de uma seção específica. Dá textura individual sem overlay global.
+
+```css
+.section-textured {
+  background-color: var(--bg-elevated);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-blend-mode: overlay;
+  background-size: 200px 200px;
+}
+```
+
+Diferença do grain overlay global: o noise como background é **parte da seção**, não uma camada fixa sobre tudo. Use quando quer dar textura a uma seção específica (ex: hero, ou uma seção elevated que precisa de materialidade) sem afetar o resto.
+
+#### Técnica 5: Accent Edge Glow (cor que "escorre" de uma borda)
+
+Um gradiente da cor accent em opacidade muito baixa posicionado em uma borda da seção (top, bottom, ou lateral). Cria a sensação de que cor "vaza" da seção adjacente ou de um elemento focal.
+
+```css
+/* Glow no topo — como se a seção anterior "derramasse" cor */
+.section-with-top-glow {
+  background: linear-gradient(
+    to bottom,
+    hsla(var(--accent-hue), 80%, 60%, 0.05) 0%,
+    var(--bg-base) 30%
+  );
+}
+
+/* Glow lateral — focaliza atenção no conteúdo */
+.section-with-side-glow {
+  background: radial-gradient(
+    ellipse at 0% 50%,
+    hsla(var(--accent-hue), 70%, 50%, 0.04) 0%,
+    var(--bg-base) 40%
+  );
+}
+```
+
+Regras do accent edge glow:
+- Opacidade do accent: **0.03-0.06** — se a cor é reconhecível, está forte demais
+- O glow deve ocupar no máximo **30-40%** da área da seção, fading para base
+- Funciona especialmente bem no **Final CTA** (aquece a seção e direciona atenção) e no **topo de seções** que seguem uma seção de destaque
+- **Nunca** use o accent em opacidade alta — isso viola a regra dos 15%
+
+#### Tabela de decisão: quando usar cada técnica
+
+| Tipo de seção | Tratamento recomendado | Por quê |
+|--------------|----------------------|---------|
+| **Hero** | Tonal gradient + mesh gradient | Primeira impressão — merece a maior complexidade |
+| **Credibility bar** | Base limpa ou tonal gradient mínimo | Seção fina e discreta — fundo limpo mantém foco no conteúdo |
+| **Process / How it works** | Dot grid ou base limpa | Conteúdo estrutural se beneficia do feel técnico do grid |
+| **Arguments / Why us** | Tonal gradient | Seção de conteúdo denso — fundo quieto que não compete |
+| **Numbers / Stats** | Base limpa ou accent edge glow sutil | Os números são o destaque — fundo não deve competir |
+| **FAQ** | Base limpa | Seção de leitura intensa — fundo calmo é obrigatório |
+| **Final CTA** | Accent edge glow + tonal gradient | O glow aquece a seção e direciona o olhar ao CTA |
+
+**Princípio geral**: seções de leitura intensa (FAQ, argumentos longos) usam fundos mais limpos. Seções de impacto visual (hero, CTA) usam tratamentos mais ricos. Nunca todas as seções com o mesmo tratamento — o contraste entre fundo tratado e fundo limpo é parte do ritmo visual.
+
+### 9.2 Camadas Atmosféricas (Atmospheric Overlays)
+
+Camadas atmosféricas são sobrepostas **ACIMA** dos fundos personalizados. O fundo é a superfície; a atmosfera é o que flutua sobre ela. Enquanto os fundos personalizados (9.1) definem a superfície de cada seção individualmente, as camadas atmosféricas são globais — cobrem a página inteira e criam uma sensação de ambiente unificado.
+
+#### Grain/noise texture
 
 Uma textura de grain sutil sobre toda a página adiciona uma sensação "analógica" e premium:
 
@@ -777,13 +917,13 @@ Uma textura de grain sutil sobre toda a página adiciona uma sensação "analóg
 
 Opacidade: 0.02-0.05 (se você percebe conscientemente, está forte demais).
 
-### Gradient orbs
+#### Gradient orbs
 
 Blobs de gradiente que flutuam sutilmente no background — não como decoração óbvia, mas como ambientação:
 
 ```tsx
-function AmbientOrb({ color, size, position, delay }: { 
-  color: string; size: number; position: { x: string; y: string }; delay: number 
+function AmbientOrb({ color, size, position, delay }: {
+  color: string; size: number; position: { x: string; y: string }; delay: number
 }) {
   return (
     <div style={{
@@ -812,7 +952,7 @@ function AmbientOrb({ color, size, position, delay }: {
 }
 ```
 
-### Vignette
+#### Vignette
 
 Escurecimento sutil nas bordas da viewport — efeito cinematográfico que direciona atenção ao centro:
 
@@ -830,6 +970,191 @@ Escurecimento sutil nas bordas da viewport — efeito cinematográfico que direc
   );
 }
 ```
+
+### 9.3 Elementos Visuais Decorativos (Decorative Visual Elements)
+
+Elementos decorativos são a terceira camada visual: o fundo personalizado (9.1) é a superfície, a atmosfera (9.2) flutua globalmente, e os elementos decorativos são **detalhes posicionados intencionalmente** que reforçam hierarquia e composição. Não são conteúdo, não são atmosfera — são acabamento artesanal.
+
+#### Accent Line
+
+Uma linha fina em accent color posicionada como marcador visual — acima de overlines, ao lado de títulos, como elemento compositivo no hero.
+
+```css
+/* Linha acima de overline */
+.overline::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* Linha ao lado de section title */
+.section-title-with-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-title-with-line::before {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+```
+
+Regras: max 2-3 accent lines por página. Largura 40-80px, altura 1-2px. Se aparecem em todo título, perdem o impacto.
+
+#### Gradient Border
+
+Borda com gradiente para destacar um card ou área específica. Usa pseudo-element porque `border-image` não funciona com `border-radius`.
+
+```css
+.gradient-border-card {
+  position: relative;
+  border-radius: 12px;
+  padding: 32px;
+  background: var(--bg-elevated);
+}
+
+.gradient-border-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* espessura da borda */
+  background: linear-gradient(
+    135deg,
+    hsla(var(--accent-hue), 80%, 60%, 0.4),
+    hsla(var(--accent-hue), 60%, 40%, 0.1)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+```
+
+Regras: usar em NO MÁXIMO 1-2 cards por página (o card featured, o plano recomendado, a área do CTA). Se todo card tem gradient border, nenhum se destaca.
+
+#### Glow Effect (Element-Level)
+
+Diferente dos gradient orbs atmosféricos (9.2), este glow é atrelado a um elemento específico — aparece no hover ou como destaque sutil.
+
+```css
+/* Glow no hover de card */
+.card-glow:hover {
+  box-shadow: 0 0 40px hsla(var(--accent-hue), 70%, 50%, 0.08);
+}
+
+/* Glow sutil permanente atrás de CTA */
+.cta-glow {
+  box-shadow: 0 0 30px hsla(var(--accent-hue), 80%, 60%, 0.12);
+}
+
+/* Glow pulsante no CTA final */
+.cta-pulse {
+  animation: cta-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cta-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsla(var(--accent-hue), 80%, 60%, 0.15); }
+  50% { box-shadow: 0 0 20px 8px hsla(var(--accent-hue), 80%, 60%, 0); }
+}
+```
+
+Regras: opacidade do glow 0.05-0.15. Se é visível como um halo nítido, está forte demais. O glow deve ser sentido, não visto.
+
+#### Decorative Dots / Circles
+
+Pequenos círculos posicionados como acentos composicionais — não aleatórios, cada um tem uma razão.
+
+```css
+/* Dot compositivo — posicionado com absolute */
+.decorative-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.3;
+  position: absolute;
+}
+
+/* Ring decorativo (circle outline) */
+.decorative-ring {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0.15;
+  position: absolute;
+}
+```
+
+Uso: no canto de áreas do hero (como marcador de composição), ao lado de step numbers em seções de processo, em interseções de grids bento. Max 3-5 por página.
+
+#### Geometric Background Shapes
+
+Formas SVG sutis posicionadas atrás do conteúdo como camada de profundidade. Diferentes dos gradient orbs (que são atmosfera difusa) — estas são formas reconhecíveis em opacidade muito baixa.
+
+```tsx
+function DecorativeShape({ type, size, position, rotation = 0 }: {
+  type: 'circle' | 'ring' | 'cross' | 'square';
+  size: number;
+  position: { x: string; y: string };
+  rotation?: number;
+}) {
+  const shapes = {
+    circle: <circle cx={size/2} cy={size/2} r={size/2} />,
+    ring: <circle cx={size/2} cy={size/2} r={size/2 - 1} fill="none" strokeWidth="1" />,
+    cross: <path d={`M${size/2} 0 V${size} M0 ${size/2} H${size}`} fill="none" strokeWidth="1" />,
+    square: <rect width={size * 0.7} height={size * 0.7} x={size * 0.15} y={size * 0.15} fill="none" strokeWidth="1" />,
+  };
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      style={{
+        position: 'absolute',
+        left: position.x,
+        top: position.y,
+        opacity: 0.06,
+        stroke: 'var(--accent)',
+        fill: type === 'circle' ? 'var(--accent)' : 'none',
+        transform: `rotate(${rotation}deg)`,
+        pointerEvents: 'none',
+      }}
+    >
+      {shapes[type]}
+    </svg>
+  );
+}
+```
+
+Regras: opacidade 0.04-0.08. Tamanho 20-60px. Posicionados em camada parallax (movem com mouse) ou estáticos. Max 3-4 shapes por página. Nunca no foreground — sempre `z-index` abaixo do conteúdo.
+
+#### Gradient Text Accent
+
+Uma palavra no headline com gradiente em vez de cor sólida. Mais impactful que accent color sólido, mas usar com extrema moderação.
+
+```css
+.gradient-word {
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    hsla(var(--accent-hue), 90%, 70%, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+```
+
+Regras: **UMA palavra por página, máximo.** Apenas no hero headline. Se mais de uma palavra tem gradiente, o efeito perde toda a potência.
 
 ---
 

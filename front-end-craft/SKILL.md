@@ -70,6 +70,22 @@ BORDERS:
 
 **Contrast**: Every text/background pair must pass WCAG AA (4.5:1 body text, 3:1 large text). See `references/implementation-details.md` → "Accessibility Baseline".
 
+### Background treatments
+
+A `background-color` is a starting point, not a finished surface. Custom background treatments use subtle gradients, textures, or patterns to make each section feel intentional — not generated. The treatment intensity scales with the immersion level:
+
+| Level | Background treatment |
+|-------|---------------------|
+| **Subtle** | Tonal gradients — 2-3 shades of the base color blended via radial/linear gradient (2-5% tonal difference) |
+| **Cinematic** | Tonal gradients + mesh gradients (multi-point radial gradients with desaturated accent), dot grids, or accent edge glows |
+| **Maximal** | Everything in Cinematic + WebGL-generated backgrounds, animated gradient meshes |
+
+**The rule**: Treatments use the BASE palette at very low contrast (2-5% tonal difference). They should be invisible on a phone screenshot but felt on a desktop. If you can clearly SEE the pattern, it's too strong.
+
+**Not every section needs treatment.** Sections with heavy reading (FAQ, long arguments) stay on clean base backgrounds. Sections of visual impact (hero, final CTA) earn the richest treatment. The contrast between treated and clean backgrounds is part of the visual rhythm.
+
+See `references/immersive-design.md` → "Fundos Personalizados" for five techniques with CSS code: tonal gradient, mesh gradient, dot grid, noise texture, accent edge glow.
+
 ## Step 3 — Build the Typography System
 
 ### Dual-font system
@@ -168,6 +184,41 @@ Don't animate everything the same way. Each element type gets a motion treatment
 - Scale-down of current + fade-in of next
 - Never a hard color-change line between sections
 
+### 3D technique decision — which technique for which element
+
+Not everything deserves 3D. Use the wrong technique and the page feels like a tech demo. Use the right one and the visitor doesn't notice the technique — they notice the quality.
+
+| Element | CSS 3D transforms | Three.js / WebGL | Skip 3D entirely |
+|---------|-------------------|------------------|------------------|
+| **Cards** | Always — tilt on hover + internal Z-depth layers | Never | — |
+| **Hero headline** | Perspective entrance (`rotateX(5deg)→0`) + text-shadow depth | Never | If immersion level is Subtle |
+| **Hero background** | Parallax layers + mesh gradient are enough for Cinematic | Particles, mesh surfaces, abstract geometry — Maximal only | Never skip entirely — at minimum use background treatments |
+| **Section containers** | Scroll-driven `rotateX` for "page turn" feel on select sections | Never | Most sections — reserve for 1-2 high-impact transitions |
+| **Icons** | `scale(1.15) + rotateY(15deg)` on hover | Never | If the section is text-heavy (FAQ, long arguments) |
+| **Numbers / stats** | Spring counter with overshoot is the motion — no 3D transforms | Never | Let the value speak |
+| **Buttons** | Magnetic pull + `translateY(-2px)` + glow | Never | — |
+
+**Rule**: CSS 3D transforms are the workhorse (every immersion level). Three.js is the exception (Maximal only, hero only, one scene per page). If you're debating "CSS 3D or Three.js?" the answer is CSS 3D.
+
+See `references/immersive-design.md` → "3D com CSS e WebGL" for all implementation code.
+
+### Transition assignment — which transition for which section pair
+
+Section transitions are not interchangeable decorations. Each type communicates a different relationship between sections. Assign them based on what the sections ARE, not randomly.
+
+| Section pair | Recommended transition | Why |
+|-------------|----------------------|-----|
+| **Hero → first content** | Scale-down + blur of hero, OR sticky hero with next section scrolling over | The hero is the "portal" — it recedes as the visitor enters the content |
+| **Content → content (same depth)** | Clip-path reveal — diagonal or inset from bottom | Sections at the same depth "unveil" each other |
+| **Content → elevated section** | Sticky current + elevated slides over | The elevated section "comes forward" — literally overlays |
+| **Elevated → base section** | Scale-fade: elevated scales down slightly as base fades in | The elevated section "settles back" |
+| **Any → Final CTA** | Clip-path circle reveal from center | The CTA is a focal point — the circle draws the eye inward |
+| **Thin sections (credibility bar)** | No cinematic transition — simple scroll entry with subtle fade | Thin transitional sections don't warrant heavy transitions |
+
+**Rule**: Max 2-3 cinematic transitions per page. The rest use simple scroll-entry reveals. If every transition is dramatic, none of them are.
+
+See `references/immersive-design.md` → "Transições Cinematográficas entre Seções" for clip-path, sticky, scale, and horizontal scroll code.
+
 **Atmosphere (ambient, passive — the exception to the "action→reward" rule)**:
 - Grain texture: 2-3% opacity, fixed overlay
 - Gradient orbs: blurred circles, accent color at 10-15% opacity, slow float (8-10s)
@@ -186,6 +237,27 @@ Performance floor:  60fps sustained (test with CPU throttle 4x)
 ```
 
 See `references/immersive-design.md` for complete implementation code: parallax, 3D tilt, custom cursor, scroll progress hooks, section transitions, Three.js setup, atmosphere effects, Lenis config, GSAP vs Framer Motion patterns, performance optimization, and degradation strategy.
+
+### Visual finishing elements — the decorative layer
+
+Beyond motion and transitions, polished pages have a layer of decorative visual elements — accent lines, glow effects, gradient borders, geometric shapes. These are the details that make a page feel hand-crafted. They are NOT content and NOT atmosphere — they are structural decoration that reinforces visual hierarchy.
+
+| Element | What it is | Where to use | Where NOT to use |
+|---------|-----------|-------------|-----------------|
+| **Accent line** | Thin line (1-2px, 40-80px) in accent color | Above overlines, beside section titles, as hero decoration | More than 2-3 per page |
+| **Gradient border** | 1px border using pseudo-element gradient | Featured cards, primary argument, hero CTA area | Every card — defeats highlighting purpose |
+| **Glow effect** | `box-shadow` with accent at 5-15% opacity | Behind cards on hover, behind CTA (subtle pulse), active nav | As a persistent visible halo — hover/focus only |
+| **Decorative dots** | Small circles (4-8px) in accent/tertiary color | Corner of hero, beside step numbers, as timeline dots | Scattered randomly — each must feel intentional |
+| **Geometric shapes** | Subtle SVG shapes (circles, rings, crosses) at 3-8% opacity | Hero background parallax layer, behind section titles | As foreground elements — always behind content |
+| **Gradient text accent** | `background-clip: text` gradient on a keyword | One word per page max — hero headline accent word | Multiple words, body text, or subtitles |
+
+**Rules**:
+- Decorative elements use accent or tertiary colors ONLY, at low opacity (3-15%)
+- Each element must reinforce hierarchy — accent lines point to content, glows highlight interactive elements
+- Max 4-5 unique decorative element types per page. More becomes visual noise.
+- All CSS-only (pseudo-elements, box-shadow, border-image, SVG). Zero JS, zero performance cost.
+
+See `references/immersive-design.md` → "Elementos Visuais Decorativos" for implementation code.
 
 ## Step 6 — Implementation
 
@@ -232,12 +304,15 @@ See `references/implementation-details.md` for Tailwind patterns, useInView hook
 - [ ] No two sections use the exact same entrance animation
 - [ ] Cards use 3D tilt on hover with glare (desktop)
 - [ ] Buttons have magnetic hover (desktop)
+- [ ] Hero and final CTA use background treatments beyond flat solid color
 - [ ] Ambient atmosphere present (grain, orbs, or vignette)
 - [ ] Section transitions are cinematic (not hard cuts)
 - [ ] All scroll animations are proportional to scroll (not binary on/off)
 - [ ] Every effect rewards a visitor action (except subtle ambient)
 - [ ] 60fps sustained during scroll
 - [ ] Only `transform` and `opacity` animated
+- [ ] At least 2-3 decorative visual elements present (accent lines, glow effects, gradient borders)
+- [ ] Decorative elements use accent/tertiary colors at low opacity (3-15%)
 - [ ] `prefers-reduced-motion` disables ALL effects
 
 **Mobile & Accessibility**
