@@ -17,7 +17,7 @@ Before starting, check if `design-system/design-system.md` exists
 in the project:
 
 **If design system exists:** Use it as single source of truth for
-Steps 1-3 (colors, typography, spacing). The reference files
+Steps 1-4 (colors, typography, spacing, and section structure/composition). The reference files
 (anti-patterns, immersive-design, implementation-details) remain
 valid as TECHNIQUE LIBRARIES — use them for HOW to implement,
 but derive WHAT to implement from the design system.

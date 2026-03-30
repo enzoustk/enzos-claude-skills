@@ -25,6 +25,21 @@ Match the majority's motion philosophy. If 2/3 references use subtle hovers → 
 ### Layout
 Hero layout from the reference closest to the project's industry. Container widths from the reference with the most professional spacing.
 
+### Structure
+When references have different structural patterns for the same
+section type (e.g., one hero is centered-typographic, another is
+split with image):
+- Use the pattern from the reference closest to the project's
+  industry and content availability (if the user has no product
+  photos, a split-image hero from the reference is irrelevant)
+- If both patterns are viable, present the choice to the user:
+  "Reference A uses centered hero, Reference B uses split layout.
+  Which structure fits your content better?"
+- Per-section structure can be cherry-picked from different
+  references: hero structure from A, features grid from B,
+  CTA composition from C
+- Document all structural choices in references-report.md
+
 ### Documentation Rule
 Every conflict and its resolution goes in `references-report.md` with reasoning. Cherry-picked elements ("typography from A, colors from B") must be documented.
 

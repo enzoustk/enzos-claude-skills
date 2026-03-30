@@ -14,6 +14,7 @@ Use this reference during Step 4 (extraction). Claude uses `web_fetch` which ret
 | Imagery | LOW | `<img>` tags, `background-image` URLs, SVG presence | Photography style (infer from gallery) |
 | Interactions | LOW | `transition`/`animation` in CSS, `@keyframes`, library imports in `<script>` | Hover feel, scroll behavior, cursor style |
 | Motion | LOW | Keyframe definitions, easing values, duration/delay | Motion philosophy (infer from animation code density) |
+| Structure | MEDIUM | HTML section hierarchy, container nesting, grid/flex declarations, element order in DOM, class names suggesting layout intent | Responsive variations, visual weight distribution, actual whitespace feel |
 
 ## What to Extract and How
 
@@ -26,6 +27,7 @@ Use this reference during Step 4 (extraction). Claude uses `web_fetch` which ret
 | **Interactions** | Hover effects, scroll behavior, animation style | 1. `transition`, `animation`, `@keyframes` in CSS. 2. `<script>` imports: GSAP, Framer Motion, Lenis, Three.js. 3. `:hover` rules for hints. Mark `[INFERRED]`. |
 | **Layout** | Grid, section rhythm, container widths, hero layout | 1. HTML section structure. 2. Grid/flex + `max-width`. 3. Hero: centered vs split from HTML. 4. Media queries. |
 | **Components** | Card/button/nav styles | 1. `border-radius`, `box-shadow`, `border` on card/button/nav selectors. 2. Button `padding` for proportions. |
+| **Structure** | Per-section composition: container hierarchy, element arrangement (what's left/right/centered, what's stacked/side-by-side), content proportions (text vs visual ratio), grid patterns (symmetric/asymmetric, column ratios), CTA placement within sections, navigation flow between sections | 1. Analyze HTML `<section>` structure — identify each distinct section by tag or class. 2. For each section: map the container hierarchy (section → container → grid/flex → items). 3. Extract grid/flex declarations to understand column ratios (e.g., `grid-template-columns: 1fr 1.5fr` = 40/60 split). 4. Note DOM order of elements within each section (what comes first, second, third). 5. Identify CTA placement (inline with content, below content, floating, sidebar). 6. Check for asymmetry in class names or grid declarations. Mark as `[PARSED]` for DOM structure and grid declarations, `[INFERRED]` for visual weight and proportions. |
 
 ## Difficult Extraction Scenarios
 

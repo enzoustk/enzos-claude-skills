@@ -65,6 +65,46 @@
 - **Grid:** [description] — [PARSED/INFERRED] | **Footer:** [minimal / structured] — [PARSED]
 - **Section rhythm:** [description] — [INFERRED]
 
+## Structure [REFERENCE-DERIVED]
+
+### Page-level composition
+- **Section count:** [N] distinct sections identified
+- **Width variation:** [description — e.g., "hero full-viewport, content 1100px, CTA 800px narrow"]
+- **Density rhythm:** [description — e.g., "hero spacious → credibility dense → features medium → CTA spacious"]
+- **Section alternation pattern:** [description — e.g., "dark bg → light bg → dark bg, text-left → text-right → centered"]
+
+### Per-section structure — [PARSED/INFERRED]
+
+**[Section 1 — e.g., Hero]**
+- Container: [max-width or full-width]
+- Composition: [description — e.g., "centered single column, headline 60% width, subtitle below at 50% width, dual CTA buttons inline, badge/trust signal above headline"]
+- Text-visual relationship: [e.g., "text-only, no imagery" or "text left 55%, product image right 45%" or "text overlaid on background visual"]
+- CTA placement: [e.g., "two buttons inline below subtitle, primary left + secondary right"]
+- Decorative positioning: [e.g., "gradient glow behind headline, accent line above overline"]
+- DOM order: [headline → subtitle → CTA group → scroll indicator]
+
+**[Section 2 — e.g., Credibility Bar]**
+- Container: [full-width]
+- Composition: [description — e.g., "horizontal flex, 4 items evenly spaced, each is icon + short text, no title"]
+- Text-visual relationship: [e.g., "icon left, text right per item"]
+- DOM order: [item × 4, no heading]
+
+**[Section 3 — e.g., Features / Why Us]**
+- Container: [max-width]
+- Composition: [description — e.g., "asymmetric bento grid, 2 large cards left (60%), 3 small cards right stacked (40%), featured card has gradient border"]
+- Text-visual relationship: [e.g., "each card: icon top-left, title, 2-line description"]
+- Grid: [description — e.g., "CSS grid, grid-template-columns: 1.5fr 1fr, gap 24px"]
+- CTA placement: [none in this section]
+
+**[Continue for each section...]**
+
+### Structural patterns extracted
+- **Hero type:** [centered-typographic / split-image / full-visual / offset-text]
+- **Card pattern:** [bento-asymmetric / equal-grid / stacked-list / alternating-sides]
+- **CTA distribution:** [hero + mid + final / hero + final / every section]
+- **Whitespace strategy:** [generous-hero-tight-content / uniform / progressive-narrowing]
+- **Content flow:** [F-pattern / Z-pattern / vertical-center / alternating-sides]
+
 ## Anti-Pattern Exceptions
 
 | Anti-pattern | Status | Justification | Method |

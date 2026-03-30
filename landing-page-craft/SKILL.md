@@ -187,6 +187,11 @@ Vary three dimensions between sections to create rhythm:
 
 ### Layout variety — no two sections share a pattern
 
+**If the design system includes a Structure section:** use the
+per-section composition patterns from the reference as the primary
+layout guide. The table below becomes a fallback for sections
+not covered by the design system's structural extraction.
+
 | Section | Layout | Avoid |
 |---------|--------|-------|
 | Hero | Centered typographic if no product imagery. Split layout if the brand has strong visual assets (product photos, illustrations) or if design system references use split heroes. | Generic stock photo split (the issue is fake imagery, not the layout itself) |

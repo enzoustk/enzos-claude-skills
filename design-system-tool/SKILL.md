@@ -1,6 +1,6 @@
 ---
 name: design-system-tool
-description: Research real reference websites and extract design systems (typography, colors, spacing, motion, layout) to drive unique visual output. Trigger when the user wants references before building, asks to "research design", "find inspiration", "extract a design system", "analyze reference sites", "look at real websites for inspiration", wants to avoid generic/AI-looking output, mentions "design system", "design tokens", "referências visuais", or wants the visual direction derived from real-world examples instead of defaults. This skill runs BEFORE front-end-craft and landing-page-craft — it produces the design system they consume. Does NOT trigger for building interfaces directly — that's front-end-craft. Does NOT trigger for LP structure/copy — that's landing-page-craft.
+description: Research real reference websites and extract design systems (typography, colors, spacing, motion, layout, structure) to drive unique visual output. Trigger when the user wants references before building, asks to "research design", "find inspiration", "extract a design system", "analyze reference sites", "look at real websites for inspiration", wants to avoid generic/AI-looking output, mentions "design system", "design tokens", "referências visuais", or wants the visual direction derived from real-world examples instead of defaults. This skill runs BEFORE front-end-craft and landing-page-craft — it produces the design system they consume. Does NOT trigger for building interfaces directly — that's front-end-craft. Does NOT trigger for LP structure/copy — that's landing-page-craft.
 ---
 
 # Design System Tool
@@ -105,15 +105,15 @@ Recommend top 3 with justification. Flag issues ("experimental layout may not tr
 
 ---
 
-## Step 4 — Extract Design Tokens
+## Step 4 — Extract Design Tokens and Structure
 
-Fetch each approved site's HTML/CSS and extract tokens. Infer motion/imagery from code patterns.
+Fetch each approved site's HTML/CSS. Extract design tokens (typography, colors, spacing, motion) AND structural patterns (how sections are composed, how elements are arranged within them).
 
 **Read `references/extraction-guide.md` before starting this step.** It contains the reliability table, extraction methods, and difficult-scenario handlers.
 
 | Input | Output |
 |-------|--------|
-| Approved reference URLs | Per-site extraction: typography, colors, spacing, motion, layout, imagery — each token tagged with method |
+| Approved reference URLs | Per-site extraction: typography, colors, spacing, motion, layout, imagery, structure — each token/pattern tagged with method |
 
 **Advance when:** Typography + colors extracted from each site. Missing categories documented.
 
@@ -143,7 +143,7 @@ Synthesize per-site extractions into one coherent design system.
 |-------|--------|
 | Per-site extractions from Step 4 | `design-system/design-system.md` + `design-system/design-system.css` |
 
-**Advance when:** Design system covers all 7 categories: typography, colors, spacing, imagery, interactions, layout, anti-pattern exceptions. Incomplete categories marked `[DEFAULT — no reference data]`.
+**Advance when:** Design system covers all 8 categories: typography, colors, spacing, imagery, interactions, layout, structure, anti-pattern exceptions. Incomplete categories marked `[DEFAULT — no reference data]`.
 
 **Fallback:** Fill gaps with front-end-craft defaults. Mark as `[DEFAULT]`. Build skills handle partial systems gracefully.
 
@@ -168,7 +168,7 @@ Run the Quality Checklist below. Auto-fix WCAG contrast failures (darken/lighten
 ## Quality Checklist
 
 ### Design system completeness
-- [ ] All 7 sections present (typography, colors, spacing, imagery, interactions, layout, anti-pattern exceptions)
+- [ ] All 8 sections present (typography, colors, spacing, imagery, interactions, layout, structure, anti-pattern exceptions)
 - [ ] Each section tagged `[REFERENCE-DERIVED]` or `[DEFAULT — no reference data]`
 - [ ] Every reference-derived token has a Method tag (`[PARSED]`, `[INFERRED]`, `[GALLERY]`)
 - [ ] Every reference-derived token traces back to a specific reference URL
