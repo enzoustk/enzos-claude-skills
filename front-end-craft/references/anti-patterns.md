@@ -63,7 +63,7 @@ The core problem is **pattern convergence** — without strong constraints, gene
 
 **Why it's wrong**: Flat solid backgrounds are the visual equivalent of a blank wall. They work for app UIs where content density carries the design, but on marketing pages and landing pages, they signal "template." Real design treats the background as a surface with subtle visual interest — tonal shifts, material texture, or color fields that reinforce the brand. A page with only flat `background-color` feels like the developer stopped before finishing.
 
-**The fix**: The hero section should have at minimum a tonal gradient (2-3 shades of the base color blended via radial gradient). The final CTA benefits from an accent edge glow (accent color at 3-5% opacity fading from one edge). Content sections alternate between clean backgrounds and subtly textured ones (dot grid, noise texture) to reinforce visual rhythm. The treatment should be nearly invisible — if the visitor consciously notices the background pattern, it's too strong. See `references/immersive-design.md` → "Fundos Personalizados" for techniques and code.
+**The fix**: The hero section should have at minimum a tonal gradient (2-3 shades of the base color blended via radial gradient). The final CTA benefits from an accent edge glow (accent color at 3-5% opacity fading from one edge). Content sections alternate between clean backgrounds and subtly textured ones (dot grid, noise texture) to reinforce visual rhythm. The treatment should be nearly invisible — if the visitor consciously notices the background pattern, it's too strong. See `references/custom-backgrounds.md` for techniques and code.
 
 ### ❌ Accent Overload
 **What it looks like**: The brand's accent color is used on buttons, icons, borders, badges, backgrounds, dividers, and hover states. The page is 40% accent color.
@@ -152,7 +152,7 @@ The core problem is **pattern convergence** — without strong constraints, gene
 
 **Why it's wrong**: In 2025+, a flat page IS the generic page. Visitors have been trained by award-winning sites to expect depth, scroll-driven reveals, and reactive elements. A flat page — even with good typography and colors — signals "template" or "AI-generated." Flatness is the new purple gradient.
 
-**The fix**: Every page needs at minimum: smooth scroll (Lenis), parallax depth in the hero, 3D tilt cards on hover, scroll-driven text reveals, cinematic section transitions, and ambient atmosphere (grain/orbs/vignette). See `references/immersive-design.md` for the complete implementation guide.
+**The fix**: Every page needs at minimum: smooth scroll (Lenis), parallax depth in the hero, 3D tilt cards on hover, scroll-driven text reveals, cinematic section transitions, and ambient atmosphere (grain/orbs/vignette). See `references/parallax-and-3d.md`, `references/scroll-animations.md`, and `references/transitions-and-atmosphere.md` for implementation.
 
 ### ❌ The Uniform Fade-Up (AOS Syndrome)
 **What it looks like**: Every single element enters with the same animation: `fade-in + translateY(20px)`. The entire page is a monotone wave of identical reveals, like items on a conveyor belt.
@@ -166,7 +166,7 @@ The core problem is **pattern convergence** — without strong constraints, gene
 
 **Why it's wrong**: Hard cuts break the immersive illusion. The page should feel like one continuous flowing experience — not a stack of separate blocks glued together.
 
-**The fix**: Every pair of adjacent sections should have a transition technique: clip-path reveal (circle, diagonal, inset), sticky section where the next slides over, scale-down of current + fade-in of next, or at minimum a gradient color bleed. See `references/immersive-design.md` → "Transições Cinematográficas."
+**The fix**: Every pair of adjacent sections should have a transition technique: clip-path reveal (circle, diagonal, inset), sticky section where the next slides over, scale-down of current + fade-in of next, or at minimum a gradient color bleed. See `references/transitions-and-atmosphere.md` → "Transições Cinematográficas."
 
 ### ❌ Binary On/Off Animation (IntersectionObserver Only)
 **What it looks like**: Element is invisible. Scroll reaches it. IntersectionObserver fires. Element fades in. Done. The animation has two states: hidden and shown.

@@ -103,19 +103,13 @@ Each section below is a template to be **adapted** to the user's brand, content,
 
 On top of the base hero, add these depth and interaction layers:
 
-**Parallax depth layers**: Split the hero into 3 layers that respond to mouse position. Background layer (gradient orbs, ambient shapes) moves 8-15px. Content layer (text) moves 2-5px. Accent layer (decorative lines, glows) moves in the opposite direction 2-3px. See `references/immersive-design.md` → "Parallax com mouse".
-
-**3D perspective container**: Wrap the hero content in a container with `perspective: 1200px`. On entrance, the content can rotate from `rotateX(5deg)` to `rotateX(0)` — creating a "falling into place" feel instead of a flat slide-up.
-
-**Custom cursor activation**: The custom cursor (dot + expanding ring) should be active from the hero. When hovering the CTA, the ring expands and the dot disappears.
-
-**Magnetic CTA**: The hero CTA button should have magnetic hover — it moves slightly toward the cursor when the cursor is near. See `references/immersive-design.md` → "Magnetic buttons".
-
-**Custom background surface**: The hero background should never be a flat `background-color`. Use a mesh gradient (2-3 overlapping radial gradients with desaturated accent color at 3-6% opacity) as the base surface, beneath any parallax layers. Combined with a tonal gradient (2-3 shades of the base color), this gives the hero visual depth before any animation is applied. See `references/immersive-design.md` → "Fundos Personalizados".
-
-**Ambient atmosphere**: Behind all text, add 2-3 gradient orbs (blurred circles in accent color at 10-15% opacity) floating with very slow animation (8-10s cycle). Add a grain texture overlay at 2-3% opacity. Optional: vignette (radial gradient darkening edges).
-
-**Three.js background (Maximal level only)**: Replace static background with a WebGL scene — floating particles, gradient mesh surface, or abstract geometry. The scene reacts to mouse position. Content overlays with `position: relative; z-index: 1`. See `references/immersive-design.md` → "Three.js".
+- **Parallax depth layers**: 3 layers responding to mouse position (background 8-15px, content 2-5px, accent -2-3px). Code: `frontend-craft` → `references/parallax-and-3d.md` → "Parallax com mouse".
+- **3D perspective container**: `perspective: 1200px`, entrance `rotateX(5deg)→0` — "falling into place" feel.
+- **Custom cursor activation**: dot + expanding ring, ring expands on CTA hover. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Custom cursor".
+- **Magnetic CTA**: button moves slightly toward cursor. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Magnetic buttons".
+- **Custom background surface**: mesh gradient + tonal gradient — never flat `background-color`. Code: `frontend-craft` → `references/custom-backgrounds.md`.
+- **Ambient atmosphere**: 2-3 gradient orbs (accent 10-15% opacity, 8-10s float) + grain (2-3%) + optional vignette. Code: `frontend-craft` → `references/transitions-and-atmosphere.md` → "Camadas Atmosféricas".
+- **Three.js background (Maximal only)**: WebGL scene reacting to mouse. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Three.js".
 
 ### Hero exit transition
 
@@ -154,10 +148,9 @@ As the visitor scrolls past the hero, it should not simply disappear. Options:
 - 2 items per row, or stack vertically with horizontal separators
 
 ### Visual layer
-- **Transition in**: No cinematic transition — simple fade-in staggered across items (150ms between) on scroll entry. This section is too thin for clip-path or sticky transitions.
-- **3D effects**: None. Trust signals should feel grounded and stable, not animated.
-- **Decorative elements**: Top and bottom structural borders are sufficient. No accent lines, no glows, no shapes.
-- **Background treatment**: Elevated color, clean. No mesh gradient, no dot grid — keep it whisper-quiet.
+- **Transition in**: Simple fade-in staggered (150ms between items). No cinematic transition — too thin.
+- **3D / Decorative**: None. Trust signals should feel grounded and stable.
+- **Background**: Elevated color, clean. No treatments.
 
 ---
 
@@ -228,10 +221,10 @@ Step 03 ──────── aligned left
 - Connector lines can animate (draw-in effect) for extra polish
 
 ### Visual layer
-- **Transition in**: Clip-path diagonal reveal (content "sweeps" in from left, matching reading direction). Alternative: simple staggered fade-in if the page already has 2+ cinematic transitions.
-- **3D effects**: Step numbers can enter with subtle `rotateY(15deg)→0` on scroll. Connector lines animate with draw-in effect (SVG `stroke-dashoffset` or height transition). Steps themselves stay flat — 3D tilt is for cards, not timeline items.
-- **Decorative elements**: Accent-colored timeline dots (8-12px). Optional: thin accent line (40px) beside the section title overline. The connector lines themselves are decorative — no additional elements needed.
-- **Background treatment**: Dot grid or clean base. See `immersive-design.md` → "Fundos Personalizados" decision table.
+- **Transition in**: Clip-path diagonal reveal, or staggered fade-in if already 2+ cinematic transitions.
+- **3D**: Step numbers `rotateY(15deg)→0` on scroll. Connector lines draw-in. Steps stay flat.
+- **Decorative**: Accent timeline dots (8-12px), optional accent line beside title.
+- **Background**: Dot grid or clean base. See `frontend-craft` → `references/custom-backgrounds.md`.
 
 ---
 
@@ -293,13 +286,10 @@ Each row alternates which side has the primary content.
 
 Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 
-**3D tilt on hover**: The card tilts toward the cursor (max ±6-8 degrees) with a glare highlight that follows the cursor position. See `references/immersive-design.md` → "Cards e Elementos com Profundidade" for the full TiltCard component.
-
-**Internal depth layers**: Elements inside the card exist at different Z-depths. When the card tilts, the icon appears to float above the title, which floats above the description. Use `transform: translateZ(40px)` on icon, `translateZ(25px)` on title, `translateZ(10px)` on description (requires `transform-style: preserve-3d` on the card).
-
-**Scroll entrance**: Cards enter with `scale(0.92) → scale(1)` + opacity, scrubbed to scroll position (not binary). Each card has a slight stagger (100-150ms offset).
-
-**Ambient glow**: On hover, a radial gradient in accent color at 5-8% opacity appears behind the card, creating a soft "backlight" effect.
+- **3D tilt on hover**: ±6-8 degrees toward cursor + glare highlight. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Cards e Elementos com Profundidade".
+- **Internal depth layers**: icon `translateZ(40px)`, title `translateZ(25px)`, description `translateZ(10px)` — requires `transform-style: preserve-3d`.
+- **Scroll entrance**: `scale(0.92)→1` + opacity, scrubbed to scroll (not binary), 100-150ms stagger.
+- **Ambient glow**: on hover, radial gradient in accent color at 5-8% opacity behind the card.
 
 ### Copy rules
 - Lead with what the CUSTOMER gets, not what the company has
@@ -346,10 +336,10 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - Stack metrics vertically with horizontal separators between them
 
 ### Visual layer
-- **Transition in**: Clip-path inset reveal from bottom (numbers "rise" into view). Count-up animation triggers after reveal completes.
-- **3D effects**: None on the numbers. The spring counter animation with overshoot IS the motion. Adding 3D transforms would compete with the number animation.
-- **Decorative elements**: Vertical separators between metrics are already decorative-structural. Optional: subtle accent edge glow from top if following a visually rich section. No additional dots, lines, or shapes — let the numbers dominate.
-- **Background treatment**: Clean base or accent edge glow. See `immersive-design.md` → "Fundos Personalizados" decision table.
+- **Transition in**: Clip-path inset reveal from bottom. Count-up triggers after reveal.
+- **3D**: None — the spring counter IS the motion.
+- **Decorative**: Vertical separators are sufficient. Optional accent edge glow from top.
+- **Background**: Clean base or accent edge glow. See `frontend-craft` → `references/custom-backgrounds.md`.
 
 ---
 
@@ -384,10 +374,9 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - End the last FAQ answer with a soft nudge: "Ainda tem dúvidas? Fale conosco pelo WhatsApp."
 
 ### Visual layer
-- **Transition in**: Scale-fade from previous section (previous section scales down 5% + blur while FAQ fades in). A "settling" transition — the page calms down for reading.
-- **3D effects**: None. This is a reading section. The accordion open/close animation (height + fade, 250ms) is the only motion.
-- **Decorative elements**: None. A clean, quiet surface is mandatory for a reading-intensive section. The narrow container (680-720px) and generous whitespace ARE the design.
-- **Background treatment**: Clean elevated base. No gradients, no dot grid, no noise. The FAQ's role is resolution — visual calm matches the emotional calm of answered questions.
+- **Transition in**: Scale-fade from previous section (scale down 5% + blur → FAQ fades in).
+- **3D / Decorative**: None. Reading section — visual calm is mandatory.
+- **Background**: Clean elevated base. No treatments.
 
 ---
 
@@ -397,7 +386,7 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 **Purpose**: Last push. The visitor has consumed all the content — now close.
 
 ### Layout
-- Base background with accent edge glow: a `linear-gradient` from the accent color at 3-5% opacity at the top, fading to base color by 30%. This warms the section and draws attention to the CTA without being an obvious accent gradient. Combine with a tonal gradient in the base color for added depth. See `references/immersive-design.md` → "Accent Edge Glow".
+- Base background with accent edge glow (accent 3-5% opacity at top, fading to base by 30%) + tonal gradient. See `frontend-craft` → `references/custom-backgrounds.md` → "Accent Edge Glow".
 - Generous vertical padding (120-160px)
 - Container: max-width 600-640px, centered, text-align center
 
@@ -438,9 +427,8 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - Decorative elements or accent-colored backgrounds
 
 ### Visual layer
-- **Transition in**: No transition — the footer is structural, not cinematic. Simple visibility on scroll.
-- **3D effects**: Social icons can have the standard `scale(1.15)` hover. Nothing else.
-- **Decorative elements**: Top border (structural). No accent lines, no glows, no shapes. The footer is closure, not spectacle.
+- **Transition**: None — structural, not cinematic. Social icons: `scale(1.15)` hover.
+- **Decorative**: Top border only. No accent lines, no glows.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: frontend-craft
-description: Create immersive, professional frontend interfaces with depth, 3D effects, scroll-driven animations, and cursor-reactive elements — not flat AI-generated aesthetics. Use this skill whenever the user asks to build any web interface, page, component, dashboard, app, or site that needs high visual quality. Trigger for requests involving "make it look professional", "design system", "visual identity", "immersive", "interactive", "3D effects", "parallax", "scroll animation", "motion design", or any mention of wanting to avoid generic/AI-generated aesthetics. Also trigger when building React components, HTML pages, or any frontend where visual craft matters. This skill defines HOW things look and feel — colors, typography, spacing, depth, motion, interactivity. It pairs with domain-specific skills (like landing-page-craft) that define WHAT to build.
+description: Create immersive, professional frontend interfaces with depth, 3D effects, scroll-driven animations, and cursor-reactive elements — not flat AI-generated aesthetics. Trigger when building any web interface, page, component, dashboard, or site needing high visual quality. Trigger phrases — "make it look professional", "design system", "visual identity", "immersive", "3D effects", "parallax", "scroll animation", "motion design", "website bonito", "UI/UX design", "make it pretty", "polish the interface", "visual upgrade", "componentes estilizados", or avoiding generic aesthetics. Also trigger for React/HTML where visual craft matters. Does NOT trigger for CSS bugfixes, layout debugging, responsive fixes, or adding a single dark-mode toggle — only for building or redesigning visual systems. Defines HOW things look and feel; pairs with domain-specific skills (like landing-page-craft) that define WHAT to build.
 ---
 
 # Frontend Craft
@@ -11,11 +11,21 @@ This skill answers the question: **"How should this look and feel?"** It pairs w
 
 ## When This Skill Is Loaded
 
-Before writing any code, read these references:
+Before writing any code, read references based on the immersion level:
 
-1. **`references/anti-patterns.md`** — the guardrails. Every item is a pattern AI defaults to that makes output look generic. Treat each as a hard constraint.
-2. **`references/immersive-design.md`** — the playbook for depth, 3D, scroll-driven animation, cursor reactivity, and atmospheric effects. This is what makes interfaces feel alive.
-3. **`references/implementation-details.md`** — the code-level details: spacing system, light/dark themes, mobile design, button proportions, accessibility, Tailwind patterns, font loading.
+### Always read (all levels):
+1. **`references/anti-patterns.md`** — guardrails obrigatórios. Every item is a pattern AI defaults to that makes output look generic. Treat each as a hard constraint.
+2. **`references/implementation-details.md`** — spacing system, light/dark themes, mobile design, button proportions, accessibility, Tailwind patterns, font loading.
+3. **`references/custom-backgrounds.md`** — background surface treatments (tonal gradient, mesh gradient, dot grid, noise, accent edge glow) per immersion level.
+4. **`references/decorative-elements.md`** — accent lines, glow effects, gradient borders, geometric shapes, gradient text accent.
+
+### Read if Cinematic or Maximal:
+5. **`references/parallax-and-3d.md`** — parallax (mouse + scroll), CSS 3D transforms, cursor customizado, magnetic buttons, 3D tilt cards. Skip Three.js sections unless Maximal.
+6. **`references/scroll-animations.md`** — scroll-driven animation philosophy, useScrollProgress hook, text reveals, Lenis smooth scroll, GSAP/Framer Motion patterns.
+7. **`references/transitions-and-atmosphere.md`** — clip-path transitions, sticky sections, grain/orbs/vignette atmosphere, performance rules, mobile degradation strategy.
+
+### Read if Maximal only:
+8. Three.js sections within `references/parallax-and-3d.md` (setup, scenes, rules).
 
 ## Step 1 — Define the Visual Identity
 
@@ -84,7 +94,7 @@ A `background-color` is a starting point, not a finished surface. Custom backgro
 
 **Not every section needs treatment.** Sections with heavy reading (FAQ, long arguments) stay on clean base backgrounds. Sections of visual impact (hero, final CTA) earn the richest treatment. The contrast between treated and clean backgrounds is part of the visual rhythm.
 
-See `references/immersive-design.md` → "Fundos Personalizados" for five techniques with CSS code: tonal gradient, mesh gradient, dot grid, noise texture, accent edge glow.
+See `references/custom-backgrounds.md` for five techniques with CSS code: tonal gradient, mesh gradient, dot grid, noise texture, accent edge glow.
 
 ## Step 3 — Build the Typography System
 
@@ -153,7 +163,7 @@ See `references/implementation-details.md` → "Spacing System" and "Text Spacin
 
 ### The three axes of immersion
 
-From `references/immersive-design.md`:
+From `references/scroll-animations.md`:
 1. **Depth (Z-axis)**: Elements exist in layers. Parallax, perspective, 3D transforms.
 2. **Scroll (Time-axis)**: Animation proportional to scroll position, not binary on/off.
 3. **Reaction (Input-axis)**: Page responds to cursor, touch, device orientation.
@@ -200,7 +210,7 @@ Not everything deserves 3D. Use the wrong technique and the page feels like a te
 
 **Rule**: CSS 3D transforms are the workhorse (every immersion level). Three.js is the exception (Maximal only, hero only, one scene per page). If you're debating "CSS 3D or Three.js?" the answer is CSS 3D.
 
-See `references/immersive-design.md` → "3D com CSS e WebGL" for all implementation code.
+See `references/parallax-and-3d.md` → "3D com CSS e WebGL" for all implementation code.
 
 ### Transition assignment — which transition for which section pair
 
@@ -217,7 +227,7 @@ Section transitions are not interchangeable decorations. Each type communicates 
 
 **Rule**: Max 2-3 cinematic transitions per page. The rest use simple scroll-entry reveals. If every transition is dramatic, none of them are.
 
-See `references/immersive-design.md` → "Transições Cinematográficas entre Seções" for clip-path, sticky, scale, and horizontal scroll code.
+See `references/transitions-and-atmosphere.md` → "Transições Cinematográficas entre Seções" for clip-path, sticky, scale, and horizontal scroll code.
 
 **Atmosphere (ambient, passive — the exception to the "action→reward" rule)**:
 - Grain texture: 2-3% opacity, fixed overlay
@@ -236,7 +246,7 @@ Animated props:     ONLY transform and opacity — never layout properties
 Performance floor:  60fps sustained (test with CPU throttle 4x)
 ```
 
-See `references/immersive-design.md` for complete implementation code: parallax, 3D tilt, custom cursor, scroll progress hooks, section transitions, Three.js setup, atmosphere effects, Lenis config, GSAP vs Framer Motion patterns, performance optimization, and degradation strategy.
+See `references/parallax-and-3d.md` for parallax and 3D tilt code, `references/scroll-animations.md` for scroll progress hooks, Lenis config, and GSAP/Framer Motion patterns, and `references/transitions-and-atmosphere.md` for section transitions, atmosphere effects, performance optimization, and degradation strategy.
 
 ### Visual finishing elements — the decorative layer
 
@@ -257,7 +267,7 @@ Beyond motion and transitions, polished pages have a layer of decorative visual 
 - Max 4-5 unique decorative element types per page. More becomes visual noise.
 - All CSS-only (pseudo-elements, box-shadow, border-image, SVG). Zero JS, zero performance cost.
 
-See `references/immersive-design.md` → "Elementos Visuais Decorativos" for implementation code.
+See `references/decorative-elements.md` for implementation code.
 
 ## Step 6 — Implementation
 
@@ -328,3 +338,14 @@ See `references/implementation-details.md` for Tailwind patterns, useInView hook
 - [ ] Horizontal padding 2-2.5× vertical padding
 - [ ] Max ONE enhancement (shadow OR glow OR border)
 - [ ] Icons left of text, 20px, same color as text
+
+## Output Reference — Minimum by Level
+
+**Subtle** (dashboard, data-heavy):
+Lenis smooth scroll + scroll-driven opacity reveals + 3D tilt on cards + grain texture (2-3%) + tonal gradient backgrounds. No custom cursor, no Three.js, no cinematic transitions.
+
+**Cinematic** (default — most products):
+Everything in Subtle + parallax layers (mouse + scroll) + magnetic buttons + split text reveals + clip-path transitions between 2-3 section pairs + custom cursor (desktop) + gradient orbs + vignette + accent decorative elements (lines, glow, gradient borders).
+
+**Maximal** (agency, gaming, portfolio):
+Everything in Cinematic + Three.js hero background (one scene) + horizontal scroll section + WebGL particles.

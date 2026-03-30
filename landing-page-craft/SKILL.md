@@ -12,6 +12,14 @@ Build landing pages that convert. This skill defines the structure, persuasion a
 ## When This Skill Is Loaded
 
 1. **Load the `frontend-craft` skill first** — it defines the visual system (colors, typography, spacing, motion, immersion). Follow its Steps 1-5 to establish the visual identity before building sections.
+
+**If `frontend-craft` is not available**, apply these minimum visual defaults before proceeding:
+- Fonts: Space Grotesk (display) + Inter (body)
+- Theme: dark (#09090B base, #FAFAFA text)
+- Immersion: Cinematic
+- Spacing: 8px grid (see Step 4 of this skill for section padding tiers)
+- Smooth scroll: Lenis (duration 1.2)
+- Accent: infer from brand or use #3B82F6
 2. **Read `references/section-blueprints.md`** — understand the section templates, layout options, and immersive enhancements for each section type.
 3. Then follow this skill's steps below for LP-specific decisions: brand extraction, section selection, persuasion arc, copywriting, and conversion strategy.
 
@@ -92,6 +100,17 @@ ACTION       →  Final CTA: do it now
 | Agency / Portfolio | Hero → Work showcase → Process → Numbers → CTA |
 | Local business | Hero → Credibility → Why Us → FAQ → CTA |
 
+### Example output: jewelry store (WhatsApp conversion)
+
+Sections: Hero → Credibility Bar → Process → Why Us → FAQ → Final CTA
+- Hero: "Seu ouro tem valor. A Áurea tem a melhor oferta." + CTA WhatsApp
+- Credibility: "Empresa Registrada" / "Pagamento em 24h" / "Avaliação Gratuita"
+- Process: 3-step timeline (Envie foto → Avaliação → Pagamento em 24h)
+- Why Us: bento grid, 4 argumentos concretos
+- FAQ: 5 perguntas na voz do visitante
+- Final CTA: "Pronto para vender seu ouro?" + botão WhatsApp
+- Floating: WhatsApp bubble (#25D366), aparece após primeiro scroll
+
 ## Step 3 — Write the Copy
 
 All text must be real, finalized copy — never placeholder. The copy is the most important conversion lever, more important than design.
@@ -142,7 +161,7 @@ Read `references/section-blueprints.md` for detailed layouts. Key principles:
 
 Vary three dimensions between sections to create rhythm:
 
-1. **Background**: alternate between base and elevated colors — but go beyond flat `background-color`. Use tonal gradients, mesh gradients, or accent edge glows to give sections visual texture. The hero earns the most complexity (mesh gradient + tonal gradient). The final CTA benefits from an accent edge glow (accent at 3-5% opacity fading from the top). Content sections stay quieter (single tonal gradient or clean base). See `frontend-craft` → `references/immersive-design.md` → "Fundos Personalizados" for techniques and code.
+1. **Background**: alternate between base and elevated colors — go beyond flat `background-color`. Hero earns the most complexity, final CTA benefits from accent edge glow, content sections stay quieter. For techniques and code, see `frontend-craft` → `references/custom-backgrounds.md`.
 2. **Padding**: tier 1 (120-160px) → tier 3 (48-64px) → tier 2 (80-96px) — never uniform
 3. **Container width**: hero (narrow, ~800px) → credibility (full-width) → process (~1000px) → FAQ (~720px) → final CTA (~640px). The narrowing creates a subconscious funnel effect.
 
@@ -170,7 +189,7 @@ NOT every section follows: overline → title → subtitle → content → CTA. 
 
 ### Immersive layer per section — 3D, transitions, and visual polish
 
-Each section gets a specific immersive treatment. Don't apply effects uniformly — assign them based on the section's role in the persuasion arc. Code for all techniques lives in `frontend-craft` → `references/immersive-design.md`.
+Each section gets a specific immersive treatment. Don't apply effects uniformly — assign them based on the section's role in the persuasion arc. For technique implementation, see `frontend-craft` → `references/parallax-and-3d.md`, `references/scroll-animations.md`, `references/transitions-and-atmosphere.md`, and `references/decorative-elements.md`.
 
 | Section | 3D / Motion | Transition IN | Decorative elements |
 |---------|------------|---------------|-------------------|
