@@ -11,6 +11,22 @@ This skill answers the question: **"How should this look and feel?"** It pairs w
 
 ## When This Skill Is Loaded
 
+### Prerequisite: Design System
+
+Before starting, check if `design-system/design-system.md` exists
+in the project:
+
+**If design system exists:** Use it as single source of truth for
+Steps 1-3 (colors, typography, spacing). The reference files
+(anti-patterns, immersive-design, implementation-details) remain
+valid as TECHNIQUE LIBRARIES — use them for HOW to implement,
+but derive WHAT to implement from the design system.
+
+**If no design system exists** (user skipped, or design-system-tool
+not available): Proceed with Steps 1-5 as written, using the
+defaults and tables in this skill. Flag to the user that the output
+will be less unique without real references.
+
 Before writing any code, read references based on the immersion level:
 
 ### Always read (all levels):
@@ -43,6 +59,16 @@ Before designing anything, extract or confirm these from the user's context. If 
 
 Every interface gets depth and interactivity — the intensity varies:
 
+**Important:** These levels define the CEILING of complexity, not a
+mandatory ingredient list. A Cinematic project does NOT require every
+item listed — select 3-5 effects that reinforce THIS project's
+personality based on the design system and brand context.
+
+If a design system was extracted and the reference sites use only
+subtle fades and clean hovers, don't inject parallax and magnetic
+buttons just because the level allows them. Match the reference's
+motion philosophy.
+
 | Level | When to use | What it includes |
 |-------|------------|-----------------|
 | **Subtle** | Conservative brands, older audiences, data-heavy interfaces, dashboards | Smooth scroll (Lenis), scroll-driven opacity/translate, 3D tilt on hover (cards), ambient grain texture. No Three.js, no custom cursor. |
@@ -64,7 +90,9 @@ ACCENT (brand's signature — max ~15% of visible area):
   Hover:            [lighter/brighter variant]
   Subtle:           [low-opacity for backgrounds/borders: rgba(accent, 0.08)]
 
-TEXT (NEVER pure #FFFFFF or #000000):
+TEXT (avoid pure #FFFFFF or #000000 — almost always, off-values
+like #FAFAFA and #0A0A0A are visually superior. Exception: if the
+extracted design system uses pure black/white intentionally, follow it.):
   Primary:          [main readable text]
   Secondary:        [descriptions, supporting]
   Tertiary:         [labels, captions, metadata]
@@ -75,6 +103,11 @@ BORDERS:
 ```
 
 **The 15% rule**: The accent color is a spotlight, not a floodlight. It appears on CTA buttons, key numbers, active states, and almost nowhere else. If the accent is everywhere, it guides nothing.
+
+This is the default constraint. If the extracted design system
+from a reference site uses accent more liberally (some brands do
+this intentionally — Stripe, Linear), match the reference's
+proportion, not this rule.
 
 **Light vs Dark**: For dark themes, "Base" is near-black (#09090B, not #000000) and depth goes lighter. For light themes, "Base" is off-white (#FAFAFA, not #FFFFFF) and depth goes whiter. See `references/implementation-details.md` → "Light Theme Architecture".
 
@@ -123,6 +156,16 @@ BODY (everything else):
 | Editorial/Magazine | Fraunces, Lora, Source Serif 4 | Fira Sans, Karla, Public Sans |
 | Playful/Friendly | Fredoka, Baloo 2, Comfortaa | Quicksand, Lexend, Atkinson Hyperlegible |
 
+**If a design system was extracted:** use the typography from the
+reference sites. This table and the font exclusions above are
+irrelevant — they exist to prevent default AI choices, not to
+override intentional reference-based decisions.
+
+**If no design system exists:** this table is a STARTING POINT.
+After selecting, search for the chosen fonts on Google Fonts,
+review real sites using them, and adjust if a better option
+exists for this specific project.
+
 ### Typographic scale
 
 Dramatic jumps between levels — not incremental 2px steps:
@@ -138,7 +181,11 @@ Button text:            16-18px                             (body font)
 
 ## Step 4 — Build the Spacing System
 
-All spacing values come from an **8px grid**: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 120, 160px. Never use values like 15px, 30px, 50px.
+Default spacing scale: 8px grid (4, 8, 12, 16, 24, 32, 48, 64,
+80, 96, 120, 160px). Avoid arbitrary values like 15px, 30px, 50px
+— unless the extracted design system uses a different base unit
+(some systems use 4px, 5px, or 10px base). If so, adopt the
+reference's scale.
 
 **The proximity principle** — related elements cluster tight, unrelated ones separate:
 
@@ -200,7 +247,7 @@ Not everything deserves 3D. Use the wrong technique and the page feels like a te
 
 | Element | CSS 3D transforms | Three.js / WebGL | Skip 3D entirely |
 |---------|-------------------|------------------|------------------|
-| **Cards** | Always — tilt on hover + internal Z-depth layers | Never | — |
+| **Cards** | Default for interactive cards — tilt + Z-depth layers. Skip if the project's motion identity (from design system) favors simpler hover states (elevation, color shift). | Only if Maximal and cards are the hero element | If cards are static/informational |
 | **Hero headline** | Perspective entrance (`rotateX(5deg)→0`) + text-shadow depth | Never | If immersion level is Subtle |
 | **Hero background** | Parallax layers + mesh gradient are enough for Cinematic | Particles, mesh surfaces, abstract geometry — Maximal only | Never skip entirely — at minimum use background treatments |
 | **Section containers** | Scroll-driven `rotateX` for "page turn" feel on select sections | Never | Most sections — reserve for 1-2 high-impact transitions |
@@ -230,7 +277,9 @@ Section transitions are not interchangeable decorations. Each type communicates 
 See `references/transitions-and-atmosphere.md` → "Transições Cinematográficas entre Seções" for clip-path, sticky, scale, and horizontal scroll code.
 
 **Atmosphere (ambient, passive — the exception to the "action→reward" rule)**:
-- Grain texture: 2-3% opacity, fixed overlay
+- Grain texture: 2-3% opacity, fixed overlay (default value — adjust
+based on reference if available. Some brands skip grain entirely;
+don't add it just because this list includes it.)
 - Gradient orbs: blurred circles, accent color at 10-15% opacity, slow float (8-10s)
 - Vignette: radial gradient darkening edges
 
@@ -301,7 +350,7 @@ See `references/implementation-details.md` for Tailwind patterns, useInView hook
 - [ ] Display font appears ONLY on titles and featured numbers
 - [ ] No pure `#FFFFFF` or `#000000` anywhere
 - [ ] Accent color covers ≤15% of visible area
-- [ ] No banned fonts (Inter, Roboto, Arial as primary — see anti-patterns)
+- [ ] Typography is intentional — either derived from design system or deliberately chosen (not Claude's default)
 - [ ] Dramatic size contrast between heading levels
 
 **Spacing**
@@ -312,10 +361,10 @@ See `references/implementation-details.md` for Tailwind patterns, useInView hook
 **Immersion & Motion**
 - [ ] Smooth scroll (Lenis) active on desktop
 - [ ] No two sections use the exact same entrance animation
-- [ ] Cards use 3D tilt on hover with glare (desktop)
-- [ ] Buttons have magnetic hover (desktop)
-- [ ] Hero and final CTA use background treatments beyond flat solid color
-- [ ] Ambient atmosphere present (grain, orbs, or vignette)
+- [ ] Interactive elements respond to hover consistently with the project's motion identity
+- [ ] Button hover states are dimensional and consistent with the motion identity
+- [ ] Hero and final CTA have intentional visual treatment (derived from design system or brand context)
+- [ ] Background treatment is intentional — derived from references or brand identity, not applied by default
 - [ ] Section transitions are cinematic (not hard cuts)
 - [ ] All scroll animations are proportional to scroll (not binary on/off)
 - [ ] Every effect rewards a visitor action (except subtle ambient)

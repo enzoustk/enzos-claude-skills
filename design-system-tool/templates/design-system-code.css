@@ -1,0 +1,46 @@
+/* Design System — [Project Name] */
+/* From: [Reference URLs] | Date: [YYYY-MM-DD] */
+:root {
+  /* Typography */
+  --font-display: '[Display Font]', [fallback-stack];
+  --font-body: '[Body Font]', [fallback-stack];
+  --text-hero: [N]px;
+  --text-h2: [N]px;
+  --text-h3: [N]px;
+  --text-body: [N]px;
+  --text-small: [N]px;
+  --text-overline: [N]px;
+  --leading-hero: [N];
+  --leading-body: [N];
+  --leading-small: [N];
+  --tracking-display: -0.02em;
+  --tracking-body: normal;
+  --tracking-overline: 0.1em;
+  /* Colors */
+  --color-base: [hex];
+  --color-elevated: [hex];
+  --color-interactive: [hex];
+  --color-accent: [hex];
+  --color-accent-hover: [hex];
+  --color-accent-subtle: rgba([r], [g], [b], 0.08);
+  --color-text-primary: [hex];
+  --color-text-secondary: [hex];
+  --color-text-tertiary: [hex];
+  --color-border: [hex];
+  --color-border-active: [hex];
+  /* Spacing — base unit × multiplier */
+  --space-unit: [N]px;
+  /* Scale: 1, 2, 3, 4, 6, 8, 12, 16, 20 × unit */
+  --section-padding-lg: [N]px;
+  --section-padding-md: [N]px;
+  --section-padding-sm: [N]px;
+  /* Layout */
+  --container-max: [N]px;
+  --container-narrow: [N]px;
+  --container-hero: [N]px;
+  /* Components */
+  --radius-card: [N]px;
+  --radius-button: [N]px;
+  --shadow-card: [value];
+  --shadow-button: [value];
+}

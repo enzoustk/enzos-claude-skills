@@ -2,6 +2,19 @@
 
 Each section below is a template to be **adapted** to the user's brand, content, and conversion goal. The layouts, copy examples, and specifications are starting points — not rigid prescriptions. What IS rigid: the anti-patterns they avoid and the visual rhythm they create.
 
+## How to use these blueprints
+
+These are OPTION CATALOGS, not prescriptions. Each section type
+shows 2-3 layout approaches with tradeoffs.
+
+**If a design system was extracted:** use the blueprints as a
+menu of structural options, then style each option according to
+the design system. The blueprint defines the skeleton; the design
+system defines the skin.
+
+**If no design system exists:** use the "Recommended" option as
+default for each section type.
+
 ## Table of Contents
 1. [Navbar](#navbar)
 2. [Hero](#hero)
@@ -52,10 +65,22 @@ Each section below is a template to be **adapted** to the user's brand, content,
 
 ### Layout
 - Height: 100vh (full viewport)
-- NO background image, photo, or illustration (unless the client has real product photography)
+**Option A (recommended — no imagery):** Pure typographic composition
++ whitespace. No background image, photo, or illustration. Best when:
+no real product photography exists, brand is text-forward.
+
+**Option B (with real imagery):** Split layout or background image
+using REAL product/brand photography (never stock). Best when: client
+has professional photography, product is visual, or design system
+includes imagery guidelines. Tradeoff: requires high-quality assets;
+poor photography is worse than no photography.
+
+**From design system:** if the reference sites use a different pattern
+for hero sections, use the reference pattern. These options are
+defaults for when no design system is available.
+
 - Content centered vertically and horizontally
 - Generous lateral margins (min 10vw desktop, 24px mobile)
-- Pure typographic composition + whitespace
 
 ### Content stack (top to bottom)
 
@@ -107,7 +132,13 @@ On top of the base hero, add these depth and interaction layers:
 - **3D perspective container**: `perspective: 1200px`, entrance `rotateX(5deg)→0` — "falling into place" feel.
 - **Custom cursor activation**: dot + expanding ring, ring expands on CTA hover. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Custom cursor".
 - **Magnetic CTA**: button moves slightly toward cursor. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Magnetic buttons".
-- **Custom background surface**: mesh gradient + tonal gradient — never flat `background-color`. Code: `frontend-craft` → `references/custom-backgrounds.md`.
+- **Custom background surface**: mesh gradient + tonal gradient is the
+  recommended default. A flat `background-color` works when the design
+  system calls for minimal surfaces or when layered effects would
+  compete with hero imagery. Tradeoff: flat backgrounds can feel
+  static in an immersive context. Code: `frontend-craft` →
+  `references/custom-backgrounds.md`. **From design system:** if the
+  reference sites use flat hero backgrounds, follow the reference.
 - **Ambient atmosphere**: 2-3 gradient orbs (accent 10-15% opacity, 8-10s float) + grain (2-3%) + optional vignette. Code: `frontend-craft` → `references/transitions-and-atmosphere.md` → "Camadas Atmosféricas".
 - **Three.js background (Maximal only)**: WebGL scene reacting to mouse. Code: `frontend-craft` → `references/parallax-and-3d.md` → "Three.js".
 
@@ -139,10 +170,18 @@ As the visitor scrolls past the hero, it should not simply disappear. Options:
   - SaaS: "10k+ Usuários" / "99.9% Uptime" / "Suporte 24/7"
   - E-commerce: "Frete Grátis" / "Troca em 30 dias" / "Compra Segura"
 
-### What NOT to do
-- Don't use big numbers here (save those for the Social Proof section)
-- Don't use colored icon backgrounds
-- Don't make this section tall or visually heavy — it's a whisper, not a shout
+### Tradeoffs and guidance
+- Big numbers belong in the Social Proof section — using them here
+  dilutes their impact. Exception: if design system references put
+  numbers in the credibility bar, follow the reference.
+- Colored icon backgrounds add visual weight — default to clean
+  icon + text, unless the design system defines colored badges.
+- Keep this section visually light. It's a whisper, not a shout.
+  A tall/heavy credibility bar competes with the hero.
+
+**From design system:** if the reference sites use a different pattern
+for credibility/trust sections, use the reference pattern. These
+guidelines are defaults for when no design system is available.
 
 ### Mobile
 - 2 items per row, or stack vertically with horizontal separators
@@ -170,7 +209,17 @@ As the visitor scrolls past the hero, it should not simply disappear. Options:
 2. **Section title**: Display font, accent or primary color
 3. **3-4 steps** in a vertical layout with connecting elements
 
-### Step layout options (choose one, never a horizontal 3-card grid):
+### Step layout options (choose one):
+
+> The three options below cover most use cases. A horizontal 3-card
+> grid is Option D — it works for exactly 3 equally-weighted steps but
+> risks looking generic if not styled distinctively. Prefer A-C by
+> default; use D only if the design system references use it or if
+> the content strongly favors equal-weight presentation.
+
+**From design system:** if the reference sites use a different layout
+for process sections, use the reference pattern. These options are
+defaults for when no design system is available.
 
 **Option A — Zig-zag**
 ```
@@ -243,7 +292,17 @@ Step 03 ──────── aligned left
 1. **Overline**: "POR QUE NÓS" / "DIFERENCIAIS" / "WHY [BRAND]"
 2. **Section title**: Display font, 36-44px
 
-### Grid layout (NOT equal cards):
+### Grid layout options:
+
+> Asymmetric layouts (Options A-C) are recommended by default — they
+> create visual hierarchy and avoid the "template" look. Equal-weight
+> card grids work when the design system calls for them or when all
+> arguments genuinely carry the same importance. Tradeoff: equal cards
+> flatten hierarchy and can feel generic without strong styling.
+
+**From design system:** if the reference sites use a different grid
+pattern for argument/feature sections, use the reference pattern.
+These options are defaults for when no design system is available.
 
 **Option A — Asymmetric bento**
 ```
@@ -329,8 +388,21 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 ### If the client has testimonials
 - Show 2-3 real testimonials below the numbers
 - Each: quote text (body font, 16-18px, secondary text, italic optional) + name + role/context (13px, tertiary)
-- Never use stock photos for testimonial avatars — initials in a circle or nothing
-- Layout: stacked vertically or 2-column (not carousel)
+- **Avatar option A (recommended):** initials in a styled circle, or
+  no avatar. Best when: no real customer photos are available.
+  **Avatar option B:** real customer photos (with permission). Best
+  when: authentic photos exist. Tradeoff: stock photos destroy trust
+  instantly — only use real photography or skip avatars entirely.
+- **Layout option A (recommended):** stacked vertically or 2-column
+  grid. Best for: scanability and clean presentation.
+  **Layout option B:** carousel/slider. Best when: 5+ testimonials
+  exist and the design system uses carousels. Tradeoff: carousels
+  reduce visibility of individual testimonials; most visitors only
+  see the first slide.
+
+**From design system:** if the reference sites use a different pattern
+for testimonial sections, use the reference pattern. These options are
+defaults for when no design system is available.
 
 ### Mobile
 - Stack metrics vertically with horizontal separators between them
@@ -421,10 +493,20 @@ Cards in an immersive LP are not flat rectangles — they exist in 3D space:
 - **Separator**: 1px divider, margin 24px 0
 - **Copyright**: body font, 12px, tertiary text, centered
 
-### What NOT to include
-- Massive multi-column footer with sitemap (this is a single-page LP)
-- Newsletter signup (the conversion channel is already defined)
-- Decorative elements or accent-colored backgrounds
+### Footer scope guidance
+
+**Option A (recommended — minimal):** Brand name, legal info, social
+icons, copyright. Best for single-page LPs where conversion is clear.
+
+**Option B (structured footer):** Multi-row footer with organized
+links, secondary navigation, additional trust signals. Best when:
+the LP serves as a micro-site, design system includes a standard
+footer, or the brand requires regulatory/legal sections. Tradeoff:
+adds visual weight, may distract from conversion.
+
+**From design system:** if the reference sites use a different footer
+pattern, use the reference pattern. These options are defaults for
+when no design system is available.
 
 ### Visual layer
 - **Transition**: None — structural, not cinematic. Social icons: `scale(1.15)` hover.

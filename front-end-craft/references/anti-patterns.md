@@ -1,5 +1,24 @@
 # Anti-Patterns — What Makes a Landing Page Look "AI-Generated"
 
+## How to use this file
+
+These are patterns that Claude produces by default when it has no
+visual direction. They indicate that a design decision was NOT made
+— the model is reproducing the statistical average of its training data.
+
+**If a design system was extracted from real references:**
+These anti-patterns do NOT apply automatically. If the approved
+reference uses Inter, white backgrounds, or a 3-card grid with icons
+— that is an intentional decision derived from a real reference, not
+a model default. Respect the design system.
+
+**If NO design system exists:**
+These anti-patterns are active guardrails. Avoid all of them. They
+exist to force intentional choices when there is no reference to
+derive decisions from.
+
+---
+
 This file is the most important reference in this skill. Every item below is a pattern that AI-generated landing pages default to. They are the reason clients say "this looks like it was made by a robot." Treat each one as a hard constraint — if you catch yourself producing any of these, stop and redesign.
 
 ## The Diagnosis

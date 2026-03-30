@@ -11,17 +11,23 @@ Build landing pages that convert. This skill defines the structure, persuasion a
 
 ## When This Skill Is Loaded
 
-1. **Load the `frontend-craft` skill first** — it defines the visual system (colors, typography, spacing, motion, immersion). Follow its Steps 1-5 to establish the visual identity before building sections.
+1. **Check if `design-system/design-system.md` exists.** If not,
+   recommend running `design-system-tool` first. If the user wants
+   to proceed without references, flag that the output will rely
+   on default visual choices.
+2. **Load `frontend-craft`** — it consumes the design system and
+   defines visual execution.
+3. **Read `references/section-blueprints.md`** — section templates
+   and layout options.
+4. Follow this skill's steps for LP-specific decisions.
 
-**If `frontend-craft` is not available**, apply these minimum visual defaults before proceeding:
+**If `frontend-craft` is not available**, apply these minimum defaults:
 - Fonts: Space Grotesk (display) + Inter (body)
 - Theme: dark (#09090B base, #FAFAFA text)
 - Immersion: Cinematic
 - Spacing: 8px grid (see Step 4 of this skill for section padding tiers)
 - Smooth scroll: Lenis (duration 1.2)
 - Accent: infer from brand or use #3B82F6
-2. **Read `references/section-blueprints.md`** — understand the section templates, layout options, and immersive enhancements for each section type.
-3. Then follow this skill's steps below for LP-specific decisions: brand extraction, section selection, persuasion arc, copywriting, and conversion strategy.
 
 ## Step 1 — Extract LP-Specific Identity
 
@@ -81,16 +87,25 @@ ACTION       →  Final CTA: do it now
 - Process is self-evident → skip "How It Works" (not every product needs it)
 - Pricing is custom/negotiated → skip pricing table
 
-**Sections to ALWAYS skip on a landing page:**
-- "About Us" — nobody cares about your story before they trust your product
-- "Our Team" — this is a landing page, not LinkedIn
-- "Our Values" — "Integrity, Innovation, Excellence" convinces nobody
+**Sections to skip BY DEFAULT** (override if design system references
+or user context justify them):
+- "About Us" — skip unless the brand story IS the value proposition
+  (founder-led brands, artisanal products, heritage companies)
+- "Our Team" — skip unless the team IS the product
+  (consulting, agency, medical practice)
+- "Our Values" — skip unless values are specific and differentiating
+  (not "Integrity, Innovation, Excellence")
 - "Blog Preview" — distracts from conversion
 - "Partner Logos" — unless instantly recognizable
 
 **A 4-section page (Hero → Why Us → FAQ → CTA) that's impeccable beats an 8-section page full of filler.**
 
 ### Section combination examples by industry
+
+**These are starting points, not recipes.** If a design system was
+extracted, analyze how the reference sites structure their pages and
+adapt. A jewelry site reference might use a hero with product
+showcase instead of the "service" template below.
 
 | Industry | Recommended sections |
 |----------|---------------------|
@@ -126,7 +141,12 @@ All text must be real, finalized copy — never placeholder. The copy is the mos
 ### CTA rules
 
 - Be specific about what happens: "Falar pelo WhatsApp", "Agendar Demo Grátis"
-- **NEVER** use: "Saiba Mais", "Clique Aqui", "Enviar", "Submit", "Learn More", "Get Started"
+- Avoid generic CTAs: "Saiba Mais", "Clique Aqui", "Enviar", "Submit".
+Exception: "Get Started" and "Learn More" are acceptable for SaaS
+products where the action IS getting started or learning more —
+the issue is using them as lazy defaults, not the phrases themselves.
+Prefer specific CTAs that describe what happens: "Falar pelo WhatsApp",
+"Agendar Demo Grátis", "Ver Preços".
 - Add microcopy below the CTA: "Sem compromisso", "Resposta em 5 min", "Grátis por 14 dias"
 
 ### Body text rules
@@ -169,7 +189,7 @@ Vary three dimensions between sections to create rhythm:
 
 | Section | Layout | NOT this |
 |---------|--------|----------|
-| Hero | Centered typographic composition | ❌ Split with image |
+| Hero | Centered typographic if no product imagery. Split layout if the brand has strong visual assets (product photos, illustrations) or if design system references use split heroes. | ❌ Generic stock photo split (the issue is fake imagery, not the layout itself) |
 | Credibility | Thin horizontal bar, no title | ❌ Cards with icons |
 | Process | Vertical timeline or zig-zag | ❌ 3-card horizontal grid |
 | Why Us | Asymmetric bento grid (60/40) | ❌ 4 equal cards |
@@ -181,8 +201,11 @@ Vary three dimensions between sections to create rhythm:
 
 NOT every section follows: overline → title → subtitle → content → CTA. Vary it:
 
-- **Credibility bar**: NO title. Content only. Self-explanatory.
-- **Numbers**: NO title, NO overline. The numbers speak.
+- **Credibility bar**: default to no title — the content should be
+self-explanatory. A subtle overline is acceptable if it adds context.
+- **Numbers**: default to no title — let the numbers speak.
+If the numbers need framing ("Nossos resultados" or context for
+WHY these numbers matter), a brief title is acceptable.
 - **Process**: Overline + title, then straight into steps. No subtitle.
 - **FAQ**: Overline + title, then accordion. No subtitle.
 - **Final CTA**: Title (as question) + one line microcopy + button. Three elements max.
@@ -214,10 +237,17 @@ Each section gets a specific immersive treatment. Don't apply effects uniformly 
 Follow `frontend-craft` Steps 1-6 for visual foundation, then:
 
 1. **Navbar**: fixed, transparent→opaque on scroll, logo, anchor links to sections, compact CTA, mobile hamburger. Mobile: CTA stays OUTSIDE hamburger menu, always visible.
-2. **Hero**: 100vh, typographic (no stock photos), staggered entrance, CTA + microcopy, scroll indicator. Apply immersive enhancements from `references/section-blueprints.md` → "Immersive hero enhancements".
+2. **Hero**: 100vh, staggered entrance. Typographic-first if no real
+imagery exists. If the brand has real product photography or
+custom illustrations, integrate them — the prohibition is
+against STOCK photos, not against imagery. Apply immersive enhancements from `references/section-blueprints.md` → "Immersive hero enhancements".
 3. **Sections top-down**: build each selected section following `references/section-blueprints.md`. Check visual rhythm between sections. Apply cinematic transitions between every section pair.
 4. **Floating CTA**: if WhatsApp/phone — fixed bottom-right, channel color, appears after first scroll. See blueprints → "Floating CTA".
-5. **Footer**: minimal — brand name, legal info, social icons, copyright. NOT a sitemap.
+5. **Footer**: default to minimal (brand name, legal, social, copyright).
+A more robust footer is acceptable if the design system references
+use them or if the business needs navigation (multi-product,
+multi-location). The rule is: the footer should not compete with
+the CTA for attention.
 
 ### Anchor links and smooth scroll
 
@@ -247,11 +277,11 @@ The `frontend-craft` skill handles visual/motion/spacing/accessibility checks. T
 - [ ] No "filler" sections (About Us, Our Team, Our Values, Blog Preview)
 
 **Section Structure**
-- [ ] No adjacent sections share the same layout pattern
-- [ ] No section uses a 3-column grid of cards with icons
+- [ ] No adjacent sections share the same layout pattern (derived from design system variety or intentional repetition, not from a fixed rule)
+- [ ] Card grids with icons are intentional and differentiated (not the default AI pattern of identical cards) — acceptable if derived from design system
 - [ ] Container widths vary between sections
 - [ ] Internal structure varies (not every section has overline+title+subtitle+content)
-- [ ] At least one section has NO title (credibility bar or numbers)
+- [ ] Section headers vary — not every section needs title+subtitle+overline. Vary based on content, not a rigid formula
 - [ ] At least the hero and final CTA use a background treatment beyond flat solid color
 - [ ] Each section has an intentional immersive treatment (3D effects, transition, decorative elements)
 - [ ] Max 2-3 cinematic section transitions — the rest use simple scroll reveals
