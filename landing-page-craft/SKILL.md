@@ -187,15 +187,15 @@ Vary three dimensions between sections to create rhythm:
 
 ### Layout variety — no two sections share a pattern
 
-| Section | Layout | NOT this |
-|---------|--------|----------|
-| Hero | Centered typographic if no product imagery. Split layout if the brand has strong visual assets (product photos, illustrations) or if design system references use split heroes. | ❌ Generic stock photo split (the issue is fake imagery, not the layout itself) |
-| Credibility | Thin horizontal bar, no title | ❌ Cards with icons |
-| Process | Vertical timeline or zig-zag | ❌ 3-card horizontal grid |
-| Why Us | Asymmetric bento grid (60/40) | ❌ 4 equal cards |
-| Numbers | Horizontal with separators, no title | ❌ Cards with big numbers |
-| FAQ | Narrow-column accordion | ❌ Grid of dropdowns |
-| Final CTA | Centered, max whitespace | ❌ Full-width colored bar |
+| Section | Layout | Avoid |
+|---------|--------|-------|
+| Hero | Centered typographic if no product imagery. Split layout if the brand has strong visual assets (product photos, illustrations) or if design system references use split heroes. | Generic stock photo split (the issue is fake imagery, not the layout itself) |
+| Credibility | Thin horizontal bar, no title (recommended). Cards with icons acceptable if design system references use them — keep visually light. | Heavy cards that compete with hero |
+| Process | Vertical timeline or zig-zag (recommended). Horizontal step cards acceptable for exactly 3 equally-weighted steps, if styled distinctively or derived from design system. | Generic 3-card grid with identical icons |
+| Why Us | Asymmetric bento grid (recommended). Equal cards acceptable if each is visually differentiated (varied sizes, accent on one) or derived from design system. | 4 identical flat cards with icon + title + text |
+| Numbers | Horizontal with separators (recommended). Cards acceptable if design system uses card-based stats. | Boxed cards that add visual weight to simple data |
+| FAQ | Narrow-column accordion (recommended). Two-column layout acceptable for 8+ questions if design system supports it. | Scattered grid that breaks reading flow |
+| Final CTA | Centered, max whitespace (recommended). Full-width treatment acceptable if design system references use it — ensure it doesn't feel like a cookie banner. | Generic colored bar with no visual distinction from a footer |
 
 ### Internal structure variety
 
